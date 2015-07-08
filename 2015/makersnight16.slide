@@ -1,26 +1,16 @@
-# This is a file.
-
-Get started with Go
+Social Networks for 3D designs sharing
 
 Hugo Arganda
 https://github.com/argandas
 @argandas
 
-* About me
+* How does open source works?
 
-.image Get_started_with_Go/gopherSquare.png
+* First stage: Contributing
 
-I work for Morey Corp. since June 2014.
+You find something useful and start to play with it.
 
-Joined Morey's test automation team around October 2014.
-
-Had no idea about what Go was until started working on it few months ago.
-
-I want to share what I have learned since.
-
-* Background
-
-# In this tutorial I'll show you how to install and use the Go Programming Language.
+Then you find a show-stopping bug, or you’d like to have a feature.
 
 * What is Go?
 
@@ -665,6 +655,10 @@ Some ideas:
 - Implement a command-line interface to specify the blog url(s) to query.
 - Expand the wordpress package to support more of the Wordpress API.
 - Learn about Go's concurrency primitives and perform multiple requests in parallel.
+
+* References
+
+.link http://www.hongkiat.com/blog/download-free-stl-3d-models/
 
 * Where to go from here
 
