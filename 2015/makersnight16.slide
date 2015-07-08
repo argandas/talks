@@ -1,0 +1,682 @@
+# This is a file.
+
+Get started with Go
+
+Hugo Arganda
+https://github.com/argandas
+@argandas
+
+* About me
+
+.image Get_started_with_Go/gopherSquare.png
+
+I work for Morey Corp. since June 2014.
+
+Joined Morey's test automation team around October 2014.
+
+Had no idea about what Go was until started working on it few months ago.
+
+I want to share what I have learned since.
+
+* Background
+
+# In this tutorial I'll show you how to install and use the Go Programming Language.
+
+* What is Go?
+
+Go is a new, general-purpose programming language.
+
+- Compiled
+- Statically typed
+- Concurrent
+- Simple
+- Productive
+
+"Go is a wise, clean, insightful, fresh thinking approach to the greatest-hits subset of the well understood."
+- Michael T. Jones
+
+
+* History
+
+- Project starts at Google in 2007 (by Griesemer, Pike, Thompson)
+- Open source release in November 2009
+- More than 250 contributors join the project
+- Version 1.0 release in March 2012
+
+# Go was originally built by a team at Google, led by Robert Griesemer, Rob Pike, and Ken Thompson. In November 2010, Go was launched publically as an open source project. Since then, a team at Google and more than 250 contributors from the open source community continued to improve the Go language, libraries, and tools.
+
+# In March 2012, we announced Go 1, a version of the language and libraries that will be supported for years to come. 
+
+* Getting started
+
+* Install Go
+
+.link http://golang.org/doc/install
+
+- Install from binary distributions or build from source
+- 32- and 64-bit x86 and ARM processors
+- Windows, Mac OS X, Linux, and FreeBSD
+- Other platforms may be supported by `gccgo`
+
+# Go is available in binary form for Windows, Mac OS X, Linux, and FreeBSD running under 32 and 64-bit x86 processor architectures. To install Go on these systems, download the appropriate file from golang.org and either open the package installer (Windows or OS X) or extract the archive to /usr/local/go (Linux and FreeBSD).  
+
+# If you use a different operating system or processor architecture, you may still be able to use Go by building it from source or using gccgo (an alternate Go compiler based on the GNU C Compiler). See the installation instructions on golang.org for how to do this.
+
+* Test your Go installation
+
+# Let's build and run a simple Go program to check that we have a valid Go install. Create a file named hello.go somewhere convenient and populate it with this Go source code:
+
+Put this code into `hello.go`:
+
+.play Get_started_with_Go/hello.go
+
+# Now, from a command prompt, run `go run hello.go`. This will build your program, storing the executable binary in a temporary location, and run it. You should see the greeting printed to the console.
+
+Run the program:
+
+  $ go run hello.go
+
+
+* The go tool
+
+The `go` tool is the standard tool for building, testing, and installing Go programs.
+
+Compile and run `hello.go`:
+
+  $ go run hello.go
+
+Run `zip` tests:
+
+  $ go test archive/zip
+
+Build and format the files in the current directory:
+
+  $ go build
+  $ go fmt
+
+Fetch and install `websocket`:
+
+  $ go get code.google.com/p/go.net/websocket 
+
+
+* Workspaces
+
+The `go` tool derives build instructions from Go source code.
+
+There's no need to write and maintain build scripts.
+
+For this to work, some prescribed directory structure, known as a workspace, is required.
+
+  workspace/
+    bin # executable binaries
+    pkg # compiled object files
+    src # source code
+
+* Create a workspace (GOPATH, GOBIN)
+
+Create your workspace now.
+
+# I prefer to use the name "gopath", but you can use whatever you like.
+
+  $ mkdir -p $HOME/gopath/src
+
+(The `bin` and `pkg` sub-directories will be created by the `go` tool.)
+
+Tell the `go` tool where your workspace is by setting the `GOPATH` environment variable:
+# You can do this on OS X, Linux, and FreeBSD by adding this line to the `$HOME/.profile` and re-starting any running shells:
+
+  export GOPATH=$HOME/gopath
+
+# See the installation instructions at golang.org for how to set `GOPATH` under Windows.
+
+You may also want to add the `bin` sub-directory of your workspace to your `PATH`:
+
+  export PATH=$PATH:$GOPATH/bin
+
+This lets you run your Go programs without specifying their full path.
+
+(You may want to put these `export` commands in the `.bash_profile` file in your home directory.)
+
+* Choose a namespace
+
+Choose a special place for your Go code.
+
+I use `"github.com/argandas"`, the root of my GitHub account (useful with `go get`).
+
+# Once you have chosen a namespace, create the required paths inside the `src` directory of your workspace:
+
+  $ mkdir -p $GOPATH/src/github.com/argandas
+
+Create a `hello` directory in your namespace and copy `hello.go` there:
+  
+  $ mkdir $GOPATH/src/github.com/argandas/hello
+  $ cp hello.go $GOPATH/src/github.com/argandas/hello
+
+Now you can build install the hello program with the `go` tool:
+
+  $ go install github.com/argandas/hello
+
+This builds an executable named `hello`, and installs it to the `bin` directory of your workspace.
+
+  $ $GOPATH/bin/hello
+  Hello, fellow gopher
+
+
+* Less talk more doing
+
+* Our project: Wordpress API
+
+A command-line program that fetches and displays the latest posts from a Wordpress online blog.
+# (Wordpress is content management system very famous to make online blogs.)
+
+The program will:
+- make an HTTP request to the Wordpress REST API,
+- decode the JSON response into a Go data structure, and
+- print each link's title, URL, and number of likes.
+
+To get started, create directory inside your namespace called `wordpress`:
+
+  # Linux
+  $ mkdir $GOPATH/src/github.com/argandas/wordpress
+  
+  # Windows
+  > mkdir %GOPATH%\src\github.com\argandas\wordpress
+  
+This is where you will put your Go source files.
+
+* Make an HTTP request
+
+This program makes an HTTP request to the Wordpress API and copies its response to standard output.  Put this in a file named `main.go` inside your `wordpress` directory.
+
+.code Get_started_with_Go/1get.go /func.main/,/^}/ 
+
+# If you run it you should see a blob of JSON data, or an error message if something goes wrong.
+
+# There's a lot going on here, so let's break it down. 
+
+
+* Make an HTTP request: package statement
+
+All Go code belongs to a package.
+
+.code Get_started_with_Go/1get.go /package/
+
+Go programs begin with function `main` inside package `main`.
+
+
+* Make an HTTP request: import statement
+
+The import declaration specifies the file's dependencies.
+
+.code Get_started_with_Go/1get.go /import/,/\)/
+
+Each string is an import path. It tells the Go tools where to find the package.
+
+These packages are all from the Go standard library.
+
+
+* Make an HTTP request: function declaration
+
+.code Get_started_with_Go/1get.go /func.main/,/^}/ HLfunc
+
+This is a function declaration. The main function takes no arguments and has no return values.
+
+* Make an HTTP request: http.Get
+
+.code Get_started_with_Go/1get.go /func.main/,/^}/ HLget
+
+Call the `Get` function from the `http` package, passing the URL of the Wordpress API as its only argument.
+
+Declare two variables (`resp` and `err`) and give them the return values of the function call. (Yes, Go functions can return multiple values.) The `Get` function returns `*http.Response` and an `error` values.
+
+
+* Make an HTTP request: error handling
+
+.code Get_started_with_Go/1get.go /func.main/,/^}/ HLerr
+
+Compare `err` against `nil`, the zero-value for the built-in `error` type.
+
+The `err` variable will be nil if the request was successful.
+
+If not, call the `log.Fatal` function to print the error message and exit the program.
+
+# I cannot overstate the importance of error checking. Disregard error values at your peril!
+
+
+* Make an HTTP request: check status
+
+.code Get_started_with_Go/1get.go /func.main/,/^}/ HLstatus
+
+Test that the HTTP server returned a "200 OK" response.
+
+If not, bail, printing the HTTP status message ("500 Internal Server Error", for example).
+
+
+* Make an HTTP request: copy
+
+.code Get_started_with_Go/1get.go /func.main/,/^}/ HLcopy
+
+Use `io.Copy` to copy the HTTP response body  to standard output (`os.Stdout`).
+
+#On the left is a variable assignment that stores the error return value of the Copy in err. Note that this is different to the previous assignment which was also a declaration. This simple assignment - distinguished by the absence of a colon - assigns the second return value of the Copy to the err variable. The first return value, which appears to be assigned to an underscore, is thrown away. The underscore can be thought of as a "write only variable".
+
+  package io
+
+  func Copy(dst Writer, src Reader) (written int64, err error)
+
+The `resp.Body` type implements `io.Reader` and `os.Stdout` implements `io.Writer`.
+
+
+* Decoding the JSON response
+
+* Data structures
+
+The Wordpress API returns JSON data like this:
+
+  {"posts": [
+  	{
+  		"title": "New Theme: Libre",
+  		"url": "http://en.blog.wordpress.com/2015/07/02/libre/",
+  		...
+  	},
+  	...
+  ]}
+
+* Data structures
+
+Go's `json` package decodes JSON-encoded data into native Go data structures. To decode the API response, declare some types that reflect the structure of the JSON data:
+
+.code Get_started_with_Go/2json.go /type.Response/,$
+
+* Decode the response
+
+Instead of copying the HTTP response body to standard output
+
+.code Get_started_with_Go/1get.go /io.Copy/
+
+we use the json package to decode the response into our Response data structure.
+
+.code Get_started_with_Go/2json.go /new.Response/,/json.NewDecoder/
+
+Initialize a new `Response` value, store a pointer to it in the new variable `r`.
+
+Create a new `json.Decoder` object and decode the response body into `r`.
+
+As the decoder parses the JSON data it looks for corresponding fields of the same names in the `Response` struct. The array `"posts"` field of the top-level JSON object is decoded into the `Response` struct's `Posts` array field, and so on.
+
+* Print the data
+
+    for _, post := range r.Posts {
+      fmt.Println(post.Title)
+    }
+
+Iterate over the `Posts` slice, assigning the slice value to `post` on each iteration.
+
+The `Println` call prints the item's `Title` followed by a newline.
+
+* Tidying up
+
+* Separation of concerns
+
+So far, all the action happens in the main function.
+
+As the program grows, structure and modularity become important.
+
+What if we want to check several blogs? Or share this functionality with another program?
+
+Create a function named `Get` that takes the url of the blog, makes the API call, and returns the posts from that blog.
+
+.code Get_started_with_Go/3func.go /func.Get/
+
+`Get` takes a string, `wp`, and returns a slice of `Post` and an `error` value.
+
+* Get: construct the URL
+
+.code Get_started_with_Go/3func.go /func.Get/,/^}/ HLurl
+
+Use `fmt.Sprintf` to construct the request URL from the provided `wordpress` string.
+
+* Get: return
+
+.code Get_started_with_Go/3func.go /func.Get/,/^}/ HLreturn
+
+Exiting the function, return a nil slice and a non-nil error value, or vice versa.
+
+* Get: making an error
+
+.code Get_started_with_Go/3func.go /func.Get/,/^}/ HLerrors
+
+The response's `Status` field is just a string; use the `errors.New` function to convert it to an `error` value.
+
+* Get: defer clean-up work
+
+.code Get_started_with_Go/3func.go /func.Get/,/^}/ HLclose
+
+Defer a call to the response body's `Close` method, to guarantee that we clean up after the HTTP request. The call will be executed after the function returns.
+
+# It's important to Close the response Body, because it tells the http package that you have finished reading, freeing up the HTTP connection to for re-used (the Go http package uses Keep-Alive and connection pooling by default). If we want to use our Get function in the context of a larger program, it must clean up properly.
+
+# TODO(adg): about defer
+
+* Get: prepare the response
+
+.code Get_started_with_Go/3func.go /func.Get/,/^}/ HLprepare
+
+* Use Get in main
+
+In the `main` function, replace the http request and JSON decoding code with a single call to `Get`.
+
+.code Get_started_with_Go/3func.go /func.main/,/^}/
+
+The print loop becomes clearer, too.
+
+However, it's not very useful to print only the title of the items. Let's address that.
+
+
+* Formatted output
+
+* The Stringer interface
+
+The `fmt` package knows how to format the built-in types, but it can be told how to format user-defined types, too.
+
+When you pass a value to the `fmt.Print` functions, it checks to see if it implements the `fmt.Stringer` interface:
+
+  type Stringer interface {
+  	String() string
+  }
+
+Any type that implements a `String() string` method is a `Stringer`, and the `fmt` package will use that method to format values of that type.
+
+
+* Formatting Items
+
+A method declaration is just like a function declaration, but the receiver comes first.
+
+Here's a `String` method for the `Post` type that returns the title, a newline, and the URL:
+
+  func (p Post) String() string {
+    return fmt.Sprintf("%s\n%s", p.Title, p.URL)
+  }
+
+To print the item we just pass it to Println, which uses the provided `String` method to format the `Post`.
+
+  fmt.Println(post)
+
+
+* Richer formatting (1/3)
+
+Let's go a step further. One way to judge how interesting a link might be is by number of people who likes it. 
+
+Let's display the number of likes for each `Post` as well.
+
+  {
+  	"title": "New Theme: Libre",
+  	"url": "http://en.blog.wordpress.com/2015/07/02/libre/",
+  	"like_count": 105,
+  	...
+  }
+
+* Richer formatting (2/3)
+
+Update the `Item` type to include a `Comments` field:
+
+.code Get_started_with_Go/4method.go /type.Post/,/^}/
+
+The new `Likes` field has a "struct tag", a string that annotates the field. Go code can use the `reflect` package to inspect this information at runtime.
+
+This tag, `json:"like_count"`, tells the `json` package to decode the `"like_count"` field of the JSON object into the `Likes` field (and the reverse, when encoding).
+
+* Richer formatting (3/3)
+
+Now the `String` method can be a little more complex:
+
+.code Get_started_with_Go/4method.go /func..p.Post..String/,/^}/
+
+Observe that, unlike some languages, Go's switch statements do not fall through by default.
+
+Now when we run our program we should see a nicely formatted list of links.
+
+
+* Packages
+
+* A new package (1/4)
+
+This is useful code. Let's organize it to make it more accessible to others by putting it in an importable package.
+
+Create a new directory inside your `wordpress` directory named `gwpress`, and copy your `main.go` file there.
+
+`wordpress` is the name of the library and `gwpress` as that of the command-line client.
+
+  # Linux
+  $ cd $GOPATH/src/github.com/argandas/wordpress
+  $ mkdir gwpress
+  $ cp main.go gwpress/
+
+  # Windows
+  > cd %GOPATH%/src/github.com/argandas/wordpress
+  > mkdir gwpress
+  > cp main.go gwpress/
+
+* A new package (2/4)
+
+Rename the `main.go` inside the `wordpress` directory to `wordpress.go`. (Not necessary; just a convention.)
+
+  # Linux
+  $ mv main.go wordpress.go
+
+  # Windows
+  > mv main.go wordpress.go
+
+* A new package (3/4)
+
+Change the package statement at the top of `wordpress.go` from `package main` to `package wordpress`.
+
+It is convention that the package name be the same as the last element of the import path.
+
+The convention makes packages predictable to use:
+
+  import "github.com/argandas/wordpress"
+
+  func foo() {
+    r, err := wordpress.Get("url") // "wordpress" here is the package name
+    // ...
+  }
+
+The only strict requirement is that it must not be `package main`.
+
+Also remove the `main` function from `wordpress.go`, and any unused package imports. (The compiler will tell you which packages are unused.)
+
+* A new package (4/4)
+
+The `wordpress.go` file now looks like this:
+
+  package wordpress
+  
+  import (
+    // omitted
+  )
+  
+  type Response struct {
+    // omitted
+  }
+  
+  type Post struct {
+    // omitted
+  }
+  
+  func (p Post) String() string {
+    // omitted
+  }
+  
+  func Get(wp string) ([]Post, error) {
+    // omitted
+  }
+
+
+* Using the wordpress package
+
+Edit the `gwpress/main.go` file to remove the `Get`, `Item`, and `Response` declarations, import the `wordpress` package, and use the `wordpress.` prefix before the `Get` invocation:
+
+.code Get_started_with_Go/main.go
+
+
+* Documentation
+
+* Documentation (1/4)
+
+`Godoc` is the Go documentation tool. It reads documentation directly from Go source files. It's easy to keep documentation and code in sync when they live together in the same place.
+
+Here's our wordpress package when viewed from `godoc`:
+
+  $ godoc github.com/argandas/wordpress
+  PACKAGE
+  package wordpress
+      import "github.com/argandas/wordpress"
+  
+  FUNCTIONS
+  func Get(wp string) ([]Post, error)
+  
+  TYPES
+  type Post struct {
+      Title    string
+      URL      string
+      Likes int `json:"like_count"`
+  }
+  
+# Here we see all our top-level declarations. This is our package's user interface (not to be confused with an interface type). Despite the lack of documentation, the one thing that jumps out at me is the Response type. This is an implementation detail, and not something that a user of this package should need to see.
+
+# In Go, top-level declarations beginning with an uppercase letter are "exported", and therefore visible outside the package. All other names are private and inaccessible to code outside the package. We can hide the Response type by simply renaming it to "response".
+
+* Documentation (2/4)
+
+First, hide the `Response` type by renaming it to `response`.
+
+In Go, top-level declarations beginning with an uppercase letter are "exported" (visible outside the package). All other names are private and inaccessible to code outside the package.
+
+To document the remaining visible names, add a comment directly above their declarations:
+
+.code Get_started_with_Go/wordpress/wordpress.go /Post.describes/,/type/
+
+.code Get_started_with_Go/wordpress/wordpress.go /Get.fetches/,/func/
+
+# It is the convention to begin godoc comments with the noun they describe. This allows the text to be displayed in a variety of contexts, not necessarily alongside the declaration itself.
+
+* Documentation (3/4)
+
+Most importantly, document the package itself by adding a comment to the package clause:
+
+.code Get_started_with_Go/wordpress/wordpress.go /Package.wordpress/,/package/
+
+Don't worry about documenting the `String` method, as all Go programmers should be familiar with it and its purpose.
+
+* Documentation (4/4)
+
+The `godoc` output for our revised package:
+
+  PACKAGE
+  
+  package wordpress
+      import "github.com/argandas/wordpress"
+  
+      Package wordpress implements a basic client for the Wordpress API.
+  
+  FUNCTIONS
+  
+  func Get(wp string) ([]Post, error)
+     Get fetches the most recent posts from a Wordpress blog.
+  
+  TYPES
+  
+  type Post struct {
+      Title    string
+      URL      string
+      Likes int `json:"like_count"`
+  }
+      Post describes a Wordpress post.
+  
+# You can also see how it will look on the web by running a local godoc instance
+
+#   $ godoc -http=localhost:8080
+
+# and loading http://localhost:8080/ in your browser.
+
+* Project results
+
+  $ gwpress
+  New Theme: Libre (130 likes)
+  [http://en.blog.wordpress.com/2015/07/02/libre/]
+
+  Reinvented Video for WordPress (327 likes)
+  [http://en.blog.wordpress.com/2015/07/01/videopress-next/]
+
+  #LoveWins! LGBTQ Bloggers Make Their Voices Heard (587 likes)
+  [http://en.blog.wordpress.com/2015/06/30/love-wins-lgbtq/]
+
+  July in Blogging U.: Blogging 101 and 201 (340 likes)
+  [http://en.blog.wordpress.com/2015/06/29/july-in-blogging-u-blogging-101-and-201/]
+
+  Celebrating 10 Years of WordPress.com &amp; Automattic (856 likes)
+  [http://en.blog.wordpress.com/2015/06/26/celebrating-10-years-of-wordpress-com-automattic/]
+
+  Early Theme Adopters: Gazette (321 likes)
+  [http://en.blog.wordpress.com/2015/06/24/early-theme-adopters-gazette/]
+
+  New Theme: Argent (331 likes)
+  [http://en.blog.wordpress.com/2015/06/18/argent/]
+
+  ...
+
+
+* Sharing your work
+
+* Publish the wordpress library
+
+- Add a copyright notice to each file
+- Choose your preferred license
+- Initialize the source control repo
+- Make your first commit
+- Push it to the remote repository
+
+
+* Install with go get
+
+Use the go tool to automatically check out and install Go code:
+
+  $ go get github.com/argandas/wordpress/gwpress
+
+This checks out the repository to `$GOPATH/src/github.com/argandas/wordpress` and installs the binary to `$GOPATH/bin/gwpress`. The `bin` directory is in my PATH, so I can now run:
+
+  $ gwpress
+
+The `go get` command can fetch code from
+
+- Bitbucket
+- GitHub
+- Google Code
+- Launchpad
+
+as well as arbitrary Git, Mercurial, Subversion, and Bazaar repositories.
+
+
+* Homework
+
+Some ideas:
+
+- Implement a command-line interface to specify the blog url(s) to query.
+- Expand the wordpress package to support more of the Wordpress API.
+- Learn about Go's concurrency primitives and perform multiple requests in parallel.
+
+* Where to go from here
+
+Learn Go:
+
+.link http://tour.golang.org 
+
+Documentation and articles:
+
+.link http://golang.org/doc
+
+Standard library reference:
+
+.link http://golang.org/pkg
+
