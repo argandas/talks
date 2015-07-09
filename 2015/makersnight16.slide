@@ -1,15 +1,18 @@
 # Slides for MakersNight #16 @ HackerGarage - July 9, 2015
 
-Social Networks
-for #3DPrinted things 
+3D printing social networks 
+9 Jul 2015
 
 Hugo Arganda
+hugo.arganda@gmail.com
+https://thingiverse.com/argandas
 @argandas
 
-# My Thingiverse profile
-https://www.thingiverse.com/argandas
-
 * What is a social network?
+
+* By defintion
+
+A social network is a dedicated website or other application that enables users to communicate with each other by posting information, comments, messages, images, etc.
 
 * Social networks are all about sharing
 
@@ -61,7 +64,7 @@ Notes:
 .link http://www.thingiverse.com/ Thingiverse (by Makerbot)
 .link https://www.youmagine.com/ YouImagine (by Ultimaker)
 .link http://www.123dapp.com/ 123DApp (by Autodesk)
-.link http://www.3dvia.com/ 3DVIA (by Solidworks)
+.link http://www.3dvia.com/ 3DVIA (by Dassault Systemes)
 .link http://cubify.com/ Cubify (by 3D Systems)
 
 * Other websites:
@@ -75,10 +78,13 @@ Notes:
 
 * As a consumer
 
+
 I was looking a case for my old Xbox 360 HDD
-And found this one by @chasenicholl
 
 .image makersnight16/measaconsumer.jpg
+
+.caption _Xbox_Case_ by [[http://www.thingiverse.com/chasenicholl/about][Chase Nicholl]]
+
 
 * As a contributor
 
@@ -90,7 +96,7 @@ Unfortunately the source files were not available, only STL files.
 
 * As a creator
 
-So I decided to create my own version, with enhanced measures and additional features.
+I decided to create my own version, with enhanced measures and additional features.
 
 .image makersnight16/measacreator.jpg
 
@@ -101,4 +107,11 @@ Also sharing feels wonderful, maybe this be useful to someone else.
 * Documentation and articles:
 
 .link http://www.hongkiat.com/blog/download-free-stl-3d-models/ 25 websites that you can use to search and download free STL models for 3D printers
+
 .link https://startbigthinksmall.wordpress.com/2011/08/10/for-beginners-how-does-open-source-work/ How does open source work?
+
+.link http://www.3ders.org/stats/20121209-top-100-websites-2012-in-3d-printing-industry.html Top 100 websites 2012 in 3D Printing Industry
+
+You can find this slides at:
+
+.link https://github.com/argandas github.com/argandas
