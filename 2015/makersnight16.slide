@@ -1,48 +1,82 @@
-Social Networks for #3DPrinted things
+# Slides for MakersNight #16 @ HackerGarage - July 9, 2015
+
+Social Networks
+for #3DPrinted things 
 
 Hugo Arganda
-.link https://github.com/argandas github.com/argandas
-.link http://www.thingiverse.com/argandas thingiverse.com/argandas
-.link http://www.twitter.com/argandas @argandas
+@argandas
 
-* How does social networks apply to #3DPrinted things?
+# My Thingiverse profile
+https://www.thingiverse.com/argandas
 
-Social networks are all about sharing
+* What is a social network?
+
+* Social networks are all about sharing
 
 .image makersnight16/networks.png
 
-* Consumer phase
+* Social networking stages
 
-You find something useful and start to play with it.
+* Stage #1: Consumer
+
+You find something useful and print it.
 
 .image makersnight16/consumer.jpg
 
 Free 3D models are available all over the web, so you can get blueprints to printout what you need (or didn't know you needed)
 
-* Contributor phase
+* Stage #2: Contributor
 
-Then you find a show-stopping bug, or you’d like to have a feature.
+Then you find it has errors or see a chance for improvement
+
+Or you’d like to have a new feature.
 
 .image makersnight16/contributor.jpg
 
-* Initiate
 
-You create something and publish your blueprints (source code)
+* Stage #3: Creator
+
+You create something and share your blueprints
 
 .image makersnight16/creator.jpg
 
+Also you can sell your stuff
 
-* Where can I do this?
+* Where can I found 3D Models to print?
 
-There is a lot of places to do this, just to mencion some of the most popular ones:
-- .link http://www.thingiverse.com/ Thingiverse
-- .link https://pinshape.com/ Pinshape
+* Social networks for 3D prints
 
-* My experience with #3DPrinted things + Social Networks
+Facts:
+
+- 3D printers are going mainstream
+- There is a lot of places where you can get/share 3D models
+- Most popular networks are run by 3D printer companies
+
+Notes:
+
+- .STL is likely the default file format to share your designs
+
+* Social networks run by a 3D printer company:
+
+.link http://www.thingiverse.com/ Thingiverse (by Makerbot)
+.link https://www.youmagine.com/ YouImagine (by Ultimaker)
+.link http://www.123dapp.com/ 123DApp (by Autodesk)
+.link http://www.3dvia.com/ 3DVIA (by Solidworks)
+.link http://cubify.com/ Cubify (by 3D Systems)
+
+* Other websites:
+.link https://pinshape.com/ Pinshape
+.link https://grabcad.com/ GrabCAD
+.link https://defcad.com/ DEFCAD
+.link https://cubehero.com/ Cubehero
+.link http://www.bld3r.com/ Bld3r
+
+* My experience with #3DPrinted things
 
 * As a consumer
 
-I was looking a case for my old Xbox 360
+I was looking a case for my old Xbox 360 HDD
+And found this one by @chasenicholl
 
 .image makersnight16/measaconsumer.jpg
 
@@ -56,13 +90,13 @@ Unfortunately the source files were not available, only STL files.
 
 * As a creator
 
-So I decided to create my own version of the case, with enhanced measures and additional features.
+So I decided to create my own version, with enhanced measures and additional features.
 
 .image makersnight16/measacreator.jpg
 
 And it fits great!
 
-Also sharing feels wonderful, maybe this is useful to someone else.
+Also sharing feels wonderful, maybe this be useful to someone else.
 
 * Documentation and articles:
 
